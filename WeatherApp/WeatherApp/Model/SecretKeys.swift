@@ -13,8 +13,9 @@ final class SecretKeys {
   let pixabyKey = "11336352-a987f72672665f4fcf59eba82"
   
   static func weatherEndpointString(qurey:String) -> String {
-   let string1 = "http://api.aerisapi.com/forecasts\(qurey)?client_id=\(SecretKeys().weatherClientId)&client_secret=\(SecretKeys().weatherkey)"
-    return string1.replacingOccurrences(of: " ", with: "%20")
+   let urlString = "http://api.aerisapi.com/forecasts/\(qurey)?client_id=\(SecretKeys().weatherClientId)&client_secret=\(SecretKeys().weatherkey)"
+    return urlString.replacingOccurrences(of: " ", with: "%20")
+
   }
   static func pixabyEndpointString(qurey:String) -> String {
     return "https://pixabay.com/api/?key=\(SecretKeys().pixabyKey)&q=\(qurey)"

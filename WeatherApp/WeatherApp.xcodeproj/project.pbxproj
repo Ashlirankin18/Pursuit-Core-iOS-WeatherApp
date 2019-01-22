@@ -17,6 +17,7 @@
 		2ED2B18621F42BAD00316A36 /* ForcatsApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2B18521F42BAD00316A36 /* ForcatsApiClient.swift */; };
 		2ED2B18821F42ECC00316A36 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2B18721F42ECC00316A36 /* UserDefaultKeys.swift */; };
 		2ED2B18A21F43BFD00316A36 /* ForcastsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2B18921F43BFD00316A36 /* ForcastsModel.swift */; };
+		2ED2B18C21F6DEAA00316A36 /* RelatedImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2B18B21F6DEAA00316A36 /* RelatedImageModel.swift */; };
 		57EE008E21F15D7000D76A6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EE008D21F15D7000D76A6E /* AppDelegate.swift */; };
 		57EE009021F15D7000D76A6E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EE008F21F15D7000D76A6E /* MainViewController.swift */; };
 		57EE009321F15D7100D76A6E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57EE009121F15D7100D76A6E /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		2ED2B18521F42BAD00316A36 /* ForcatsApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcatsApiClient.swift; sourceTree = "<group>"; };
 		2ED2B18721F42ECC00316A36 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		2ED2B18921F43BFD00316A36 /* ForcastsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcastsModel.swift; sourceTree = "<group>"; };
+		2ED2B18B21F6DEAA00316A36 /* RelatedImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedImageModel.swift; sourceTree = "<group>"; };
 		57EE008A21F15D7000D76A6E /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57EE008D21F15D7000D76A6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57EE008F21F15D7000D76A6E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				2ED2B18121F42B8200316A36 /* AppError.swift */,
 				2ED2B18521F42BAD00316A36 /* ForcatsApiClient.swift */,
+				2ED2B18B21F6DEAA00316A36 /* RelatedImageModel.swift */,
 				2ED2B18921F43BFD00316A36 /* ForcastsModel.swift */,
 				2ED2B18321F42B8C00316A36 /* NetworkHelper.swift */,
 				2ED2B17F21F2BDBE00316A36 /* SecretKeys.swift */,
@@ -271,6 +274,7 @@
 				2ED2B18A21F43BFD00316A36 /* ForcastsModel.swift in Sources */,
 				57EE009021F15D7000D76A6E /* MainViewController.swift in Sources */,
 				2ED2B17C21F2ACD700316A36 /* WeatherCollectionViewCell.swift in Sources */,
+				2ED2B18C21F6DEAA00316A36 /* RelatedImageModel.swift in Sources */,
 				2ED2B18821F42ECC00316A36 /* UserDefaultKeys.swift in Sources */,
 				2ED2B18021F2BDBE00316A36 /* SecretKeys.swift in Sources */,
 				2ED2B17821F2AA1D00316A36 /* FavoritesViewController.swift in Sources */,

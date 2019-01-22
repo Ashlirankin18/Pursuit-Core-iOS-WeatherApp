@@ -19,8 +19,12 @@ class MainViewController: UIViewController {
       self.welcomeLabel.text = "This is your 7-Day forcast for \(place)"
     }
   }
+  var currentIndex = Int()
   var forcasts = [Periods](){
     didSet{
+      DispatchQueue.main.async {
+         self.weatherCollection.reloadData()
+      }
       print("I am set")
     }
   }
@@ -32,40 +36,27 @@ class MainViewController: UIViewController {
     weatherCollection.delegate = self
     setUpMainUi()
   }
- 
-  private func getPlaceName(zipCode:String) -> String {
-    
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    guard let destination = segue.destination as? DetailledWeatherViewController else {return}
+    destination.placeName = place.replacingOccurrences(of: " ", with: "%20")
+  }
+  private func getPlaceName(zipCode:String){
     ZipCodeHelper.getLocationName(from: zipCode) { (error, placeName) in
-   
       if let error = error{
         print(error.localizedDescription)
       }
       if let placeName = placeName {
-       self.place = placeName
-        dump(placeName)
+        self.place = placeName
+        print(placeName)
       }
     }
-    return place
   }
   private func setUpMainUi(){
     self.welcomeLabel.text = "Welcome to World Weather"
     self.promptLabel.text = "Please enter you Zipcode"
   }
-}
-extension MainViewController:UICollectionViewDelegateFlowLayout,UICollectionViewDataSource{
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 7
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = weatherCollection.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCollectionViewCell else {return UICollectionViewCell()}
-    return cell
-  }
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize.init(width: 200, height: 250)
-  }
   private func collectForcasts(qurey:String){
-    WeatherApiClient.getForcast(qurey: qurey) { (error, forcasts) in
+    WeatherApiClient.getForecast(qurey: qurey) { (error, forcasts) in
       if let error = error{
         print(error.errorMessage())
       }
@@ -75,20 +66,40 @@ extension MainViewController:UICollectionViewDelegateFlowLayout,UICollectionView
       }
     }
   }
+//  private func dateFormatter(nonFormattedDate:String) -> String{
+//
+//
+//  }
+}
+extension MainViewController:UICollectionViewDelegateFlowLayout,UICollectionViewDataSource{
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return forcasts.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+   let forcast = forcasts[indexPath.row]
+    guard let cell = weatherCollection.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCollectionViewCell else {return UICollectionViewCell()}
+   cell.dayImage.image = UIImage(named: forcast.icon)
+    cell.dayTemp.text = """
+    Max Temp: \(forcast.maxTempF)
+    Min Temp: \(forcast.minTempF)
+    """
+    return cell
+  }
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    currentIndex = indexPath.row
+  }
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize.init(width: 200, height: 250)
+  }
+  
 }
 
 extension MainViewController:UITextFieldDelegate{
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = textField.text {
-      if let zipcode = Int(text) {
-        isZipcode = true
-         let placeName =  getPlaceName(zipCode: String(zipcode))
-        collectForcasts(qurey: placeName)
-      }else {
-        isZipcode = false
-        print("not a zipcode")
-       
-      }
+     collectForcasts(qurey: text)
+      getPlaceName(zipCode: text)
     }
     return true
   }

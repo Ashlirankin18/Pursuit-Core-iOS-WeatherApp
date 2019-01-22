@@ -7,14 +7,20 @@
 //
 
 import Foundation
-struct Response:Codable {
-  let response: [Forcasts]
+struct Weather: Codable{
+  let success:Bool
+  let response :[Forecasts]
+ 
 }
-struct Forcasts:Codable {
-  let periods: [Periods]?
+struct Forecasts: Codable {
+   let periods: [Periods]
 }
-
+struct Location:Codable {
+  let long: Double
+  let lat: Double
+}
 struct Periods:Codable {
+  let dateTimeISO:String
   let timestamp: Int
   let maxTempF:Int
   let maxTempC:Int
@@ -26,7 +32,7 @@ struct Periods:Codable {
   let sunsetISO:String
   let maxHumidity: Int
   let minHumidity:Int
-  let avgFeelsLikeF:Int
-  let avgFeelsLikeC: Int
+  let avgFeelslikeF:Int
+  let avgFeelslikeC: Int
   
 }

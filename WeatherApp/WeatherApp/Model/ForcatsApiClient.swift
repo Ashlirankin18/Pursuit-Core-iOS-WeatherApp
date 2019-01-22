@@ -8,19 +8,36 @@
 
 import Foundation
 final class WeatherApiClient{
-  static func getForcast(qurey:String,completionHandler: @escaping (AppError?,[Periods]?) -> Void){
+  static func getForecast(qurey:String,completionHandler: @escaping (AppError?,[Periods]?) -> Void){
     NetworkHelper.shared.performDataTask(endpointURLString: SecretKeys.weatherEndpointString(qurey: qurey), httpMethod: "GET", httpBody: nil) { (error, data, response) in
+          
       if let error = error {
   completionHandler(AppError.badURL(error.errorMessage()),nil)
       }
       if let data = data {
         do {
-          let forcasts = try JSONDecoder().decode(Forcasts.self, from: data).periods
-          completionHandler(nil,forcasts)
+          let forecasts = try JSONDecoder().decode(Weather.self, from: data).response.first?.periods
+        dump(forecasts)
+      completionHandler(nil,forecasts)
         } catch {
           completionHandler(AppError.decodingError(error),nil)
         }
       }
+    }
+  }
+  static func getRelatedImageUrl(qurey:String,completionHandler: @escaping (AppError?,ImageData?) -> Void){
+    NetworkHelper.shared.performDataTask(endpointURLString: SecretKeys.pixabyEndpointString(qurey: qurey), httpMethod: "GET", httpBody: nil) { (error, data, response) in
+      if let error = error {
+  completionHandler(AppError.badURL(error.errorMessage()),nil)
+      }
+  if let data = data{
+        do{
+        let imageData = try JSONDecoder().decode(AllImages.self, from: data).hits.randomElement()
+          completionHandler(nil,imageData)
+        } catch {
+          completionHandler(AppError.decodingError(error),nil)
+        }
+        }
     }
   }
 }
