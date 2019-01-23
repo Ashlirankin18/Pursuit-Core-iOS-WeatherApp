@@ -15,13 +15,9 @@ struct Weather: Codable{
 struct Forecasts: Codable {
    let periods: [Periods]
 }
-struct Location:Codable {
-  let long: Double
-  let lat: Double
-}
 struct Periods:Codable {
   let dateTimeISO:String
-  let timestamp: Int
+  let timestamp:Int
   let maxTempF:Int
   let maxTempC:Int
   let minTempF:Int
@@ -34,5 +30,6 @@ struct Periods:Codable {
   let minHumidity:Int
   let avgFeelslikeF:Int
   let avgFeelslikeC: Int
-  
 }
+
+

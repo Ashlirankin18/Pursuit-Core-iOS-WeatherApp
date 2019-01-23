@@ -21,6 +21,7 @@ class ZipCodeHelper {
         DispatchQueue.main.async {
           if let placemark = placemarks?.first, let name = placemark.locality {
             completionHandler(nil, name)
+            
           } else {
             completionHandler(error, nil)
           }

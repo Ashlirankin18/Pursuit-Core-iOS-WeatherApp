@@ -17,17 +17,40 @@ class DetailledWeatherViewController: UIViewController {
   override func viewDidLoad() {
         super.viewDidLoad()
 welcomeLabel.text = "Weather forecast for \(placeName.replacingOccurrences(of: "%20", with: " ")) on date"
+    setUpUi()
     }
-  @IBAction func savedButtonPressed(_ sender: UIBarButtonItem) {
-    
+  var place: Periods!
+  private func UiImageToData(image:UIImage) -> Data?{
+    let imageData = image.jpegData(compressionQuality: 0.5)
+    return imageData
   }
   
-  var placeName = ""{
+  @IBAction func savedButtonPressed(_ sender: UIBarButtonItem) {
+    if let data = UiImageToData(image: self.cityImage.image!){
+      let forcast = ForecastModel.init(imageData: data, placeName: placeName)
+      DirectoryManager.addItem(item: forcast)
+    }
+  }
+  
+  var placeName = "" {
     didSet{
       getImagePath(qurey: placeName)
     }
   }
- 
+  
+  private func setUpUi(){
+    self.weatherDescription.text = """
+    This day is \(place.weather)
+    
+    Feels like  \(place.avgFeelslikeF)
+    
+    
+    High: \(place.maxTempF)
+    
+    
+    Low:  \(place.minTempF)
+    """
+  }
 private func getImagePath(qurey:String){
     WeatherApiClient.getRelatedImageUrl(qurey: qurey) { (error, path) in
       if let error = error{
@@ -40,7 +63,7 @@ private func getImagePath(qurey:String){
   }
 private func getImage(path:URL){
     do{
-    let data = try  Data.init(contentsOf: path)
+    let data = try Data.init(contentsOf: path)
       DispatchQueue.main.async {
          self.cityImage.image = UIImage(data: data)
       }
